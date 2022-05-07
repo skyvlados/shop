@@ -2,85 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CountryStoreRequest;
+use App\Http\Requests\CountryUpdateRequest;
+use App\Interfaces\RepositoryInterface;
 use App\Models\Country;
+use App\Services\DependableService;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct(private RepositoryInterface $repository)
+    {
+    }
+
     public function index()
     {
-        $country = Country::query()->where('name','=','Россия')->first();
-        return view('countries.index',compact('country'));
+        $allCountries = $this->repository->getAll();
+        return view('countries.index',['countries'=>$allCountries]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('countries.create', ['name' => 'James']);
+        return view('countries.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CountryStoreRequest $request)
     {
-        //
+        $country=$this->repository->store($request->user(),$request->validated());
+        return redirect('/countries')->with('success','Страна '.$country->name.' создана!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Country $country)
     {
-        return view('countries.show', ['name' => 'James']);
+        dd($country->using());
+        return view('countries.show', compact('country'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Country $country)
     {
-        return view('countries.edit', ['name' => 'James']);
+        return view('countries.edit', compact('country'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CountryUpdateRequest $request, Country $country)
     {
-        //
+        $this->repository->update($request->user(),$request->validated(), $country);
+        return redirect('/countries')->with('success','Страна '.$country->name.' отредактирована!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Country $country, Request $request, DependableService $dependableService)
     {
-        //
+        if ($dependableService->checkUsing($country)) {
+            return redirect('/countries')
+                ->with('error','Невозможно удалить страну '.$country->name.' из-за связи с '.$dependableService->getName().'!');
+        }
+        $this->repository->destroy($request->user(), $country);
+        return redirect('/countries')->with('success','Страна '.$country->name.' удалена!');
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\ManufacturerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/countries', function () {
-    return view('countries.index');
-});
-
+Route::resource('countries', CountryController::class)->parameter('countries','country');
+Route::resource('manufacturers', ManufacturerController::class)->parameter('manufacturers','manufacturer');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
