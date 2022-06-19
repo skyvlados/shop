@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ManufacturerController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::get('/', function () {
 });
 Route::resource('countries', CountryController::class)->parameter('countries','country');
 Route::resource('manufacturers', ManufacturerController::class)->parameter('manufacturers','manufacturer');
+Route::resource('items', ItemsController::class)->parameter('items','item');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

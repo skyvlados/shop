@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repositories\Items;
 use Illuminate\Foundation\Application;
 use App\Repositories\Countries;
 use App\Repositories\Manufacturers;
@@ -15,6 +16,7 @@ class RepositoryServiceProvider extends ServiceProvider
     private const REPOSITORIES = [
         'countries.*' => Countries::class,
         'manufacturers.*' => Manufacturers::class,
+        'items.*' => Items::class,
     ];
 
     public function register(): void

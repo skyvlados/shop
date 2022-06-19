@@ -14,13 +14,8 @@
                         <input disabled width="280px" id="manufacturerName" type="text" name="manufacturerName" value="{{$manufacturer->name}}"/>
                         <x-label for="manufacturer" :value="__('Страна:')" />
                         <select disabled name="countryName" class="form-control custom-select">
-                            <option>{{$country->name}}</option>
+                            <option>{{$manufacturer->country->name}}</option>
                         </select>
-
-                        <br>
-                        <x-button class="mt-4">
-                            {{ __('Сохранить') }}
-                        </x-button>
                     </div>
                     <div class="p-6 bg-white border-b border-gray-200">
                         <a href="{{route('manufacturers.index')}}" class="px-2 py-3 border">{{ __('К списку') }}</a>
@@ -28,4 +23,5 @@
                 </div>
             </div>
         </div>
+    </form>
 </x-app-layout>

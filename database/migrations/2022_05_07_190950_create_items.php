@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign(['user_id'])->on('users')->references('id');
             $table->bigInteger('editor_id')->nullable();
             $table->foreign(['editor_id'])->on('users')->references('id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

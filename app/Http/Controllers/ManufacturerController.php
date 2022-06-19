@@ -47,11 +47,11 @@ class ManufacturerController extends Controller
      * Display the specified resource.
      *
      */
-    public function show($id)
+    public function show(Manufacturer $manufacturer)
     {
-        $manufacturer = Manufacturer::query()->find($id);
-        $country=Country::query()->find($manufacturer->country_id);
-        return view('manufacturers.show',['manufacturer'=>$manufacturer, 'country'=>$country]);
+//        $manufacturer = Manufacturer::query()->find($id);
+//        $country=Country::query()->find($manufacturer->country_id);
+        return view('manufacturers.show',['manufacturer'=>$manufacturer]);
     }
 
     /**

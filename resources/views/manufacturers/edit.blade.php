@@ -12,14 +12,21 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 form-group">
                         <x-label for="manufacturerName" :value="__('Название производителя:')" />
-                        <input id="manufacturerName" type="text" name="name" value="{{$manufacturer->name}}"/>
-                        <x-label for="manufacturer" :value="__('Страна:')" />
-                        <select id="manufacturer" name="country_id" class="form-control custom-select">
+                        <input id="manufacturerName" type="text" name="name"
+                               value="@if($errors->any()){{old('name')}}@else{{$manufacturer->name}}@endif"/>
+                        @if ($errors->has('name'))
+                            <div style="color:red" class="alert alert-danger">{{ $errors->first('name') }}</div>
+                        @endif
+                        <x-label for="country" :value="__('Страна:')" />
+                        <select id="country" name="country_id" class="form-control custom-select">
                             @foreach($countries as $country)
                                 <option value="{{$country->id }}" {{($country->id===$countryDefault->id) ? 'selected' : ''}}>
                                     {{$country->name}}</option>
                             @endforeach
                         </select>
+                        @if ($errors->has('name') || $errors->has('country_id'))
+                            <div style="color:red" class="alert alert-danger">{{ $errors->first('country_id') }}</div>
+                        @endif
 
                         <br>
                         <x-button class="mt-4">
@@ -32,4 +39,5 @@
                 </div>
             </div>
         </div>
+    </form>
 </x-app-layout>

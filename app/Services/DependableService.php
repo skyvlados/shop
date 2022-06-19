@@ -3,14 +3,11 @@
 namespace App\Services;
 
 use App\Interfaces\UsingInterface;
-use App\Models\Manufacturer;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class DependableService
 {
-    private array $names=[]; //хранть название мануфактур, товаров
+    private array $names=[]; //хранить название мануфактур, товаров
 
     public function getName(): string
     {

@@ -18,6 +18,9 @@
                     <a href="{{route('manufacturers.index')}}" class="px-2 py-3 text-left border">
                         {{ __('К списку производителей') }}
                     </a>
+                    <a href="{{route('items.index')}}" class="px-2 py-3 text-left border">
+                        {{ __('К списку товаров') }}
+                    </a>
                 </div>
             </div>
         </div>

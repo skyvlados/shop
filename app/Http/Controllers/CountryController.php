@@ -47,7 +47,6 @@ class CountryController extends Controller
      */
     public function show(Country $country)
     {
-        dd($country->using());
         return view('countries.show', compact('country'));
     }
 
